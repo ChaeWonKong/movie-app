@@ -3,44 +3,32 @@ import './App.css';
 import Movie from './Movie';
 
 class App extends Component {
-  state = {
 
-  }
+  state = {}
 
   componentDidMount() {
-    setTimeout(() => {
-      this.setState({
-        movies: [
-          {
-            title: "Matrix",
-            poster: "https://images-na.ssl-images-amazon.com/images/I/51EG732BV3L._SY445_.jpg"
-          }, 
-          {
-            title: "Dallas Buyer's Club",
-            poster: "https://m.media-amazon.com/images/M/MV5BMTYwMTA4MzgyNF5BMl5BanBnXkFtZTgwMjEyMjE0MDE@._V1_UX182_CR0,0,182,268_AL_.jpg",
-          }, 
-          {
-            title: "Star Wars",
-            poster: "https://imgc.allpostersimages.com/img/posters/star-wars-return-of-the-jedi_u-L-EZYVJ0.jpg?src=gp&w=300&h=375",
-          },
-          {
-            title: "Gran Torino",
-            poster: "https://upload.wikimedia.org/wikipedia/en/thumb/c/c6/Gran_Torino_poster.jpg/220px-Gran_Torino_poster.jpg"
-          },
-          {
-            title: "Django Unchained",
-            poster: "https://images-na.ssl-images-amazon.com/images/I/81-FFd6v00L._SY445_.jpg"
-          }
-        ]
-      })
-    }, 2000)
+      this._getMovies()
   }
 
   _renderMovies = () => {
-    const movies = this.state.movies.map((movie, index) => {
-      return <Movie title={movie.title} poster={movie.poster} key={index}/>
+    const movies = this.state.movies.map((movie) => {
+      return <Movie title={movie.title} poster={movie.medium_cover_image} key={movie.id}/>
     })
     return movies
+  }
+
+  _getMovies = async () => {
+    const movies = await this._callApi()
+    this.setState({
+      movies
+    })
+  }
+
+  _callApi = () => {
+    return fetch("https://yts.am/api/v2/list_movies.json?sort_by=rating")
+    .then(res => res.json())
+    .then(json => json.data.movies)
+    .catch(err => console.log(err))
   }
 
   render() {
