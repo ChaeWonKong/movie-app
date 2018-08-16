@@ -33,7 +33,12 @@ class App extends Component {
   _callApi = () => {
     return fetch("https://yts.am/api/v2/list_movies.json?sort_by=download_count")
     .then(res => res.json())
-    .then(json => json.data.movies)
+    // .then(json => json.data.movies)
+    .then(function(json) {
+      const result = json.data.movies;
+      console.log(result);
+      return result;
+    })
     .catch(err => console.log(err))
   }
 
