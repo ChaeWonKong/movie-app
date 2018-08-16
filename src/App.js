@@ -14,7 +14,7 @@ class App extends Component {
     const movies = this.state.movies.map((movie) => {
       return <Movie
               title={movie.title_english} 
-              poster={movie.medium_cover_image} 
+              poster={movie.large_cover_image} 
               key={movie.id} 
               genres={movie.genres}
               synopsis={movie.synopsis}
@@ -41,7 +41,9 @@ class App extends Component {
     const { movies } = this.state;
     return (
       <div className={movies ? "App" : "App--loading"}>
-        {movies ? this._renderMovies() : 'Loading'}
+        {movies 
+          ? this._renderMovies() 
+          : <div><p>Loading...</p><img src="http://www.starship42.com/load.gif" width="50px"/></div>}
       </div>
     );
   }
