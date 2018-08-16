@@ -27,8 +27,8 @@ class App extends Component {
     const movies = await this._callApi()
     this.setState({
       movies
-    })
-  }
+    });
+  };
 
   _callApi = () => {
     return fetch("https://yts.am/api/v2/list_movies.json?sort_by=download_count")
@@ -43,7 +43,7 @@ class App extends Component {
       <div className={movies ? "App" : "App---loading"}>
         {movies ? this._renderMovies() : 'Loading'}
       </div>
-    )
+    );
   }
 }
 
